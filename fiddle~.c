@@ -464,7 +464,7 @@ void sigfiddle_doit(t_sigfiddle *x)
 	fp1[1] = 0.7071f * (im - re);
 	fp1[4] = fp2[0] + fp3[1];
 	fp1[5] = fp2[1] - fp3[0];
-	
+
 	fp1 += 8, fp2 += 2, fp3 += 2;
 	re= FILT1 * ( fp2[ -2] -fp2[ 1]  -fp3[ -2] +fp3[ 1]) +
 	    FILT2 * ( fp2[ -3] -fp2[ 2]  -fp3[ -3] +fp3[ 2]) +
@@ -482,7 +482,7 @@ void sigfiddle_doit(t_sigfiddle *x)
 	fp1[1] = 0.7071f * (im - re);
 	fp1[4] = fp2[0] - fp3[1];
 	fp1[5] = fp2[1] + fp3[0];
-	
+
 	fp1 += 8, fp2 += 2, fp3 += 2;
     }
 #if 0
@@ -548,7 +548,7 @@ void sigfiddle_doit(t_sigfiddle *x)
     {
 	float height = fp[2], h1 = fp[-2], h2 = fp[6];
 	float totalfreq, pfreq, f1, f2, m, var, stdev;
-	
+
 	if (height < h1 || height < h2 ||
 	    h1 < 0.00001f*total_power || h2 < 0.00001f*total_power)
 	    	continue;
@@ -784,7 +784,7 @@ void sigfiddle_doit(t_sigfiddle *x)
 		    peaklist[j].p_width : MINBW);
 		weight = 1.0f / ((stdev*fipnum) * (stdev*fipnum));
 		freqden += weight;
-		freqnum += weight * peaklist[j].p_freq/fipnum;		
+		freqnum += weight * peaklist[j].p_freq/fipnum;
 #if 1
 		if (x->x_nprint)
 		{
@@ -1629,7 +1629,7 @@ void sigfiddle_dsp(t_sigfiddle *x, t_signal **sp)
    	}
 	sigfiddle_reattack(x, x->x_attacktime, x->x_attackthresh);
     sigfiddle_vibrato(x, x->x_vibtime, x->x_vibdepth);
-    dsp_add64(fiddle_perform, 3, sp[0]->s_vec, x, sp[0]->s_n);
+    dsp_add(fiddle_perform, 3, sp[0]->s_vec, x, sp[0]->s_n);
 }
 
 void sigfiddle_tick(t_sigfiddle *x)	/* callback function for the clock
@@ -1644,7 +1644,7 @@ MSP*/
     	for (i = 0, po = x->x_peakbuf; i < npeakout; i++, po++)
     	{
 	    	t_atom at[3];
-	    	// SETINT(at, i+1);  // changing for Mach-O. 
+	    	// SETINT(at, i+1);  // changing for Mach-O.
 			SETFLOAT(at, i+1);
 	    	SETFLOAT(at+1, po->po_freq);
 	    	SETFLOAT(at+2, po->po_amp);
@@ -1746,7 +1746,7 @@ void ext_main() // this can be called fiddle_setup if that name is the "Main" in
 {
 	setup((t_messlist **)&sigfiddle_class, (method)sigfiddle_new, (method)sigfiddle_ff,
 		(short)sizeof(t_sigfiddle), 0L, A_DEFLONG, A_DEFLONG, A_DEFLONG, A_DEFLONG, 0);
-	addmess((method)sigfiddle_dsp, 		"dsp64",
+	addmess((method)sigfiddle_dsp, 		"dsp",
 	A_CANT, 0);
     addmess((method)sigfiddle_debug, 	"debug", 		0);
     addmess((method)sigfiddle_amprange, "amp-range",	A_FLOAT, A_FLOAT, 0);
